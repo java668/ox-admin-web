@@ -3,7 +3,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
-import elFrame from '@/components/Iframe/index'
+import elFrame from '@/components/Iframe'
 export default {
   name: 'Swagger',
   components: { elFrame },

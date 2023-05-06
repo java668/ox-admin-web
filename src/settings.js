@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'OX ADMIN',
+  title: 'OX-ADMIN',
 
   /**
    * @type {boolean} true | false
