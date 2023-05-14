@@ -15,7 +15,7 @@ pipeline {
                 nodejs('nodejs14'){
                   sh '''
                     cnpm install
-                    npm run build
+                    npm run build:prod
                   '''
                 }
 
