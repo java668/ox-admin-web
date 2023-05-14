@@ -12,10 +12,12 @@ pipeline {
             steps {
                 echo '=============打包============='
                 //使用NodeJS的npm进行打包
-                sh '''
-                  npm install
-                  npm run build
-                '''
+                nodejs('nodejs14'){
+                  sh '''
+                    npm install
+                    npm run build
+                  '''
+                }
 
             }
         }
