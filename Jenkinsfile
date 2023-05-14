@@ -14,7 +14,7 @@ pipeline {
                 //使用NodeJS的npm进行打包
                 nodejs('nodejs14'){
                   sh '''
-                    cnpm install
+                    npm install
                     npm run build:prod
                   '''
                 }
