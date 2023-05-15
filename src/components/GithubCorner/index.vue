@@ -1,5 +1,5 @@
 <template>
-  <a href="http://oxadmin.java668.com/dashboard" target="_blank" class="github-corner" aria-label="View source on Github">
+  <a href="https://github.com/java668/ox-admin" target="_blank" class="github-corner" aria-label="View source on Github">
     <svg
       width="80"
       height="80"
