@@ -83,6 +83,13 @@ service.interceptors.response.use(
             location.reload()
           })
         })
+      } else if (status === 403) {
+        debugger
+        Message({
+          message: '暂无权限操作，请联系管理员',
+          type: 'error',
+          duration: 5 * 1000
+        })
       } else {
         Message({
           message: error.response.data.message || error.response.statusText || '接口请求失败',

@@ -1,4 +1,4 @@
-import request from '@/utils/record-request'
+import request from '@/utils/ox-request'
 
 export function addMenu(data) {
   return request({

@@ -1,4 +1,4 @@
-import request from '@/utils/record-request'
+import request from '@/utils/ox-request'
 import qs from 'qs'
 
 export function login(data) {

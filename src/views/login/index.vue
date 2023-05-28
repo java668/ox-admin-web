@@ -44,8 +44,8 @@
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
             <div class="tips">
-              <span style="margin-right:20px;">账号: admin</span>
-              <span> 密码: 123456【自觉点，莫要乱操作】</span>
+              <span style="margin-right:20px;">测试账号: test</span>
+              <span> 密码: aa123456【自觉点，莫要乱操作】</span>
             </div>
 
     </el-form>
@@ -66,8 +66,8 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: 'test',
+        password: 'aa123456'
       },
       loginRules: {
         username: [
