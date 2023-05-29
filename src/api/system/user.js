@@ -41,3 +41,11 @@ export function get(userId) {
   })
 }
 
+export function changeStatus(userId, status) {
+  return request({
+    url: `/v1/user/${userId}/changeStatus`,
+    method: 'patch',
+    params: { status }
+  })
+}
+

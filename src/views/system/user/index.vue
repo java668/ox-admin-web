@@ -225,7 +225,7 @@
 
 <script>
 // import { checkBtnPermission } from '@/utils/permission' // 权限判断函数
-import { add, page, batchDelete, get as getUser, update } from '@/api/system/user'
+import {add, page, batchDelete, get as getUser, update, changeStatus} from '@/api/system/user'
 import { list as roleList } from '@/api/system/role'
 import { validPhone } from '@/utils/validate'
 import { mapGetters } from 'vuex'
@@ -447,7 +447,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        update(data).then(res => {
+        changeStatus(data.id, data.enabled).then(res => {
           const message = this.$dict.label.userStatus[val] + '成功'
           this.$message({ message, type: 'success' })
           this.getList()
