@@ -9,7 +9,8 @@ const getDefaultState = () => {
     name: '',
     avatar: '',
     roles: [],
-    permissions: []
+    permissions: [],
+    user: {}
   }
 }
 
@@ -36,6 +37,9 @@ const mutations = {
   },
   SET_PERMISSIONS: (state, permissions) => {
     state.permissions = permissions
+  },
+  SET_USER: (state, user) => {
+    state.user = user
   }
 }
 
@@ -72,6 +76,7 @@ const actions = {
         commit('SET_USER_ID', id)
         commit('SET_ROLES', roles)
         commit('SET_PERMISSIONS', permissions)
+        commit('SET_USER', data)
         resolve(data)
       }).catch(error => {
         reject(error)

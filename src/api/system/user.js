@@ -49,3 +49,11 @@ export function changeStatus(userId, status) {
   })
 }
 
+export function modifyPass(data) {
+  return request({
+    url: `/v1/user/modifyPass`,
+    method: 'patch',
+    data
+  })
+}
+

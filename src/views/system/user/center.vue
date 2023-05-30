@@ -9,7 +9,7 @@
           <div>
             <div style="text-align: center">
               <div class="el-upload">
-                <img :src="user.avatarName ? baseApi + '/avatar/' + user.avatarName : Avatar" title="点击上传头像" class="avatar" >
+                <img :src="avatar ? avatar : Avatar" title="头像" class="avatar" >
               </div>
             </div>
             <ul class="user-info">
@@ -35,33 +35,24 @@
 <script>
 import { mapGetters } from 'vuex'
 import updatePass from './center/updatePass'
-import updateEmail from './center/updateEmail'
-import { getToken } from '@/utils/auth'
-// import store from '@/store'
+import store from '@/store'
 import Avatar from '@/assets/images/avatar.png'
 export default {
   name: 'Center',
-  components: { updatePass, updateEmail },
+  components: { updatePass },
   data() {
     return {
-      show: false,
-      Avatar: Avatar,
-      activeName: 'first',
-      saveLoading: false,
-      headers: {
-        'Authorization': getToken()
-      },
-      user: {}
+      Avatar: Avatar
     }
   },
   computed: {
     ...mapGetters([
-      'userId'
+      'avatar',
+      'user'
     ])
   },
   created() {
-    // this.form = { id: this.user.id, nickName: this.user.nickName, gender: this.user.gender, phone: this.user.phone }
-    // store.dispatch('GetInfo').then(() => {})
+    store.dispatch('user/getInfo').then(() => {})
   },
   methods: {
   }

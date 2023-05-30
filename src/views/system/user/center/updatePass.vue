@@ -22,7 +22,7 @@
 
 <script>
 import store from '@/store'
-import { updatePass } from '@/api/system/user'
+import { modifyPass } from '@/api/system/user'
 export default {
   data() {
     const confirmPass = (rule, value, callback) => {
@@ -60,7 +60,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.loading = true
-          updatePass(this.form).then(res => {
+          modifyPass(this.form).then(res => {
             this.resetForm()
             this.$notify({
               title: '密码修改成功，请重新登录',
@@ -68,7 +68,7 @@ export default {
               duration: 1500
             })
             setTimeout(() => {
-              store.dispatch('LogOut').then(() => {
+              store.dispatch('user/logout').then(() => {
                 location.reload() // 为了重新实例化vue-router对象 避免bug
               })
             }, 1500)
