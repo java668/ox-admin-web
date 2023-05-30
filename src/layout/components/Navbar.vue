@@ -19,7 +19,7 @@
           <a target="_blank" href="https://github.com/java668/ox-admin">
             <el-dropdown-item>项目地址</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://github.com/java668/ox-admin">
+          <a target="_blank" href="https://java668.github.io/ox-admin-doc/">
             <el-dropdown-item>项目文档</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
