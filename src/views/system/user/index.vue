@@ -163,7 +163,7 @@
     >
       <el-form ref="userForm" :inline="true" :model="form" :rules="rules" size="small" label-width="80px">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" :disabled="form.id" @keydown.native="keydown($event)" />
+          <el-input v-model="form.username" :disabled="form.id != null" @keydown.native="keydown($event)" />
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model.number="form.phone" />
@@ -174,10 +174,10 @@
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" />
         </el-form-item>
-        <el-form-item v-if="operation" label="密码" prop="pass">
+        <el-form-item v-if="form.id === undefined" label="密码" prop="pass">
           <el-input v-model.number="form.pass" type="password" auto-complete="new-password" />
         </el-form-item>
-        <el-form-item v-if="operation" label="确认密码" prop="checkPass">
+        <el-form-item v-if="form.id === undefined" label="确认密码" prop="checkPass">
           <el-input v-model.number="form.checkPass" type="password" />
         </el-form-item>
         <el-form-item label="性别">
@@ -225,7 +225,7 @@
 
 <script>
 // import { checkBtnPermission } from '@/utils/permission' // 权限判断函数
-import {add, page, batchDelete, get as getUser, update, changeStatus} from '@/api/system/user'
+import { add, page, batchDelete, get as getUser, update, changeStatus } from '@/api/system/user'
 import { list as roleList } from '@/api/system/role'
 import { validPhone } from '@/utils/validate'
 import { mapGetters } from 'vuex'
@@ -283,7 +283,6 @@ export default {
       editLoading: false,
       rowId: undefined,
       submitLoading: false,
-      operation: false, // true:新增, false:编辑
       deleteIds: [], // true:新增, false:编辑
       listQuery: {
         page: 1,
@@ -394,7 +393,6 @@ export default {
       this.addLoading = false
       this.dialog.visible = true
       this.dialog.title = '新增'
-      this.operation = true
     },
     // 显示编辑界面
     handleEdit: async function(params) {
@@ -415,7 +413,7 @@ export default {
           this.$confirm('确认提交吗？', '提示', {}).then(() => {
             this.submitLoading = true
             const data = Object.assign({}, this.form)
-            if (this.operation) {
+            if (data.id === undefined) {
               add(data).then((res) => {
                 this.submitLoading = false
                 this.$message({ message: '操作成功', type: 'success' })
