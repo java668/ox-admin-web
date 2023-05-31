@@ -1,5 +1,6 @@
 <template>
-  <div class="login">
+  <div class="login" :style="backgroundStyle">
+    <div class="vegas-overlay" />
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">OX-ADMIN 后台管理系统</h3>
       <el-form-item prop="username">
@@ -23,7 +24,7 @@
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="code" v-if="captchaEnabled">
+      <el-form-item v-if="captchaEnabled" prop="code">
         <el-input
           v-model="loginForm.code"
           auto-complete="off"
@@ -34,7 +35,7 @@
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
         <div class="login-code">
-          <img :src="codeUrl" @click="getCode" class="login-code-img"/>
+          <img :src="codeUrl" class="login-code-img" @click="getCode">
         </div>
       </el-form-item>
       <el-checkbox v-if="false" v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
@@ -49,7 +50,7 @@
           <span v-if="!loading">登 录</span>
           <span v-else>登 录 中...</span>
         </el-button>
-        <div style="float: right;" >
+        <div style="float: right;">
           <router-link class="link-type" :to="'/register'">立即注册</router-link>
         </div>
       </el-form-item>
@@ -88,7 +89,16 @@ export default {
       loading: false,
       passwordType: 'password',
       redirect: undefined,
-      captchaEnabled: false
+      captchaEnabled: false,
+      currentIndex: 0,
+      backgroundImageUrl: require('@/assets/images/party.1036.jpg')
+    }
+  },
+  computed: {
+    backgroundStyle() {
+      return {
+        'background-image': `url(${this.backgroundImageUrl})`
+      }
     }
   },
   watch: {
@@ -98,6 +108,25 @@ export default {
       },
       immediate: true
     }
+  },
+  mounted() {
+    setInterval(() => {
+      // 定义要切换的背景图片，双引号里面，可以放任意多个
+      const images = [
+        // require('@/assets/images/party.1036.jpg'),
+        require('@/assets/images/party.1037.jpg'),
+        require('@/assets/images/party.1038.jpg'),
+        require('@/assets/images/party.1039.jpg'),
+        require('@/assets/images/party.1041.jpg'),
+        require('@/assets/images/party.1040.jpg')
+      ]
+      if (this.currentIndex >= images.length) {
+        this.currentIndex = 0
+      }
+      this.backgroundImageUrl = images[this.currentIndex]
+      this.currentIndex += 1
+      console.log('backgroundImageUrl', this.backgroundImageUrl)
+    }, 5000)
   },
   methods: {
     showPwd() {
@@ -136,8 +165,20 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-image: url("../../assets/images/login-bg.jpg");
+  //background-image: url("../../assets/images/login-bg.jpg");
   background-size: cover;
+}
+.vegas-overlay {
+  opacity: 0.2;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../assets/images/overlay.png);
+  z-index: 0;
 }
 .title {
   margin: 0px auto 30px auto;
@@ -150,6 +191,7 @@ export default {
   background: #ffffff;
   width: 400px;
   padding: 25px 25px 5px 25px;
+  z-index: 1;
   .el-input {
     height: 38px;
     input {

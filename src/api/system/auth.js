@@ -25,6 +25,13 @@ export function routerList() {
   })
 }
 
+export function register() {
+  return request({
+    url: '/register',
+    method: 'post'
+  })
+}
+
 export function logout() {
   return request({
     url: '/logout',
