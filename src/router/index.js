@@ -84,6 +84,20 @@ export const constantRoutes = [
         meta: { title: '个人中心' }
       }
     ]
+  },
+  {
+    path: '/tool/gen-edit',
+    component: Layout,
+    hidden: true,
+    permissions: ['tool:gen:edit'],
+    children: [
+      {
+        path: 'index/:tableId(\\d+)',
+        component: () => import('@/views/tool/generator/editTable'),
+        name: 'GenEdit',
+        meta: { title: '修改生成配置', activeMenu: '/tool/generator' }
+      }
+    ]
   }
 ]
 

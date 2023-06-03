@@ -19,6 +19,7 @@
     "core-js": "3.6.5",
     "echarts": "4.2.1",
     "element-ui": "2.13.2",
+    "highlight.js": "9.18.5",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",

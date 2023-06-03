@@ -16,9 +16,14 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import plugins from '@/plugins/index'
 import permission from '@/directive/permission/index.js'
-import dict from '@/config/dict'
+
 import * as filters from './filters' // global filters
+// 公共方法
+import * as common from '@/utils/common'
+// 分页组件
+import Pagination from '@/components/Pagination'
 
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI, {
@@ -31,8 +36,17 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
-Vue.prototype.$dict = dict
+
+// 全局方法挂载
+Object.keys(common).forEach(key => {
+  Vue.prototype[key] = common[key]
+})
+
+// 全局组件挂载
+Vue.component('Pagination', Pagination)
+
 Vue.use(permission)
+Vue.use(plugins)
 
 new Vue({
   el: '#app',

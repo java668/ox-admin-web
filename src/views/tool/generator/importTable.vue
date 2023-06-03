@@ -85,8 +85,8 @@ export default {
     getList() {
       listDbTable(this.queryParams).then(res => {
         if (res.code === 200) {
-          this.dbTableList = res.rows
-          this.total = res.total
+          this.dbTableList = res.data.list
+          this.total = res.data.total
         }
       })
     },
@@ -103,7 +103,7 @@ export default {
     /** 导入按钮操作 */
     handleImportTable() {
       const tableNames = this.tables.join(',')
-      if (tableNames == '') {
+      if (tableNames === '') {
         this.$modal.msgError('请选择要导入的表')
         return
       }

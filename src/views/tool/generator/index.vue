@@ -37,7 +37,6 @@
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['tool:gen:code']"
           type="primary"
           plain
           icon="el-icon-download"
@@ -47,7 +46,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['tool:gen:import']"
           type="info"
           plain
           icon="el-icon-upload"
@@ -57,7 +55,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['tool:gen:edit']"
           type="success"
           plain
           icon="el-icon-edit"
@@ -68,7 +65,6 @@
       </el-col>
       <el-col :span="1.5">
         <el-button
-          v-hasPermi="['tool:gen:remove']"
           type="danger"
           plain
           icon="el-icon-delete"
@@ -77,7 +73,7 @@
           @click="handleDelete"
         >删除</el-button>
       </el-col>
-      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />
+      <!--      <right-toolbar :show-search.sync="showSearch" @queryTable="getList" />-->
     </el-row>
 
     <el-table v-loading="loading" :data="tableList" @selection-change="handleSelectionChange">
@@ -113,35 +109,30 @@
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
-            v-hasPermi="['tool:gen:preview']"
             type="text"
             size="small"
             icon="el-icon-view"
             @click="handlePreview(scope.row)"
           >预览</el-button>
           <el-button
-            v-hasPermi="['tool:gen:edit']"
             type="text"
             size="small"
             icon="el-icon-edit"
             @click="handleEditTable(scope.row)"
           >编辑</el-button>
           <el-button
-            v-hasPermi="['tool:gen:remove']"
             type="text"
             size="small"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
           >删除</el-button>
           <el-button
-            v-hasPermi="['tool:gen:edit']"
             type="text"
             size="small"
             icon="el-icon-refresh"
             @click="handleSynchDb(scope.row)"
           >同步</el-button>
           <el-button
-            v-hasPermi="['tool:gen:code']"
             type="text"
             size="small"
             icon="el-icon-download"
@@ -181,6 +172,7 @@ import { listTable, previewTable, delTable, genCode, synchDb } from '@/api/gener
 import importTable from './importTable'
 import hljs from 'highlight.js/lib/highlight'
 import 'highlight.js/styles/github-gist.css'
+import Pagination from '@/components/Pagination'
 hljs.registerLanguage('java', require('highlight.js/lib/languages/java'))
 hljs.registerLanguage('xml', require('highlight.js/lib/languages/xml'))
 hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
@@ -190,7 +182,7 @@ hljs.registerLanguage('sql', require('highlight.js/lib/languages/sql'))
 
 export default {
   name: 'Gen',
-  components: { importTable },
+  components: { importTable, Pagination },
   data() {
     return {
       // 遮罩层
@@ -244,12 +236,15 @@ export default {
     /** 查询表集合 */
     getList() {
       this.loading = true
-      listTable(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        this.tableList = response.rows
-        this.total = response.total
-        this.loading = false
+      if (this.dateRange) {
+        this.queryParams.startTime = this.createTime[0]
+        this.queryParams.endTime = this.createTime[1]
       }
-      )
+      listTable(this.queryParams).then(response => {
+        this.tableList = response.data.list
+        this.total = response.data.total
+        this.loading = false
+      })
     },
     /** 搜索按钮操作 */
     handleQuery() {

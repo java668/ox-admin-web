@@ -227,7 +227,7 @@ export default {
     },
     /** 关闭按钮 */
     close() {
-      const obj = { path: '/tool/gen', query: { t: Date.now(), pageNum: this.$route.query.pageNum }}
+      const obj = { path: '/tool/generator', query: { t: Date.now(), pageNum: this.$route.query.pageNum }}
       this.$tab.closeOpenPage(obj)
     }
   }
