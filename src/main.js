@@ -13,11 +13,12 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import store from './store'
 import router from './router'
+// directive
+import directive from './directive' // directive
 
 import '@/icons' // icon
 import '@/permission' // permission control
 import plugins from '@/plugins/index'
-import permission from '@/directive/permission/index.js'
 
 import * as filters from './filters' // global filters
 // 公共方法
@@ -45,8 +46,8 @@ Object.keys(common).forEach(key => {
 // 全局组件挂载
 Vue.component('Pagination', Pagination)
 
-Vue.use(permission)
 Vue.use(plugins)
+Vue.use(directive)
 
 new Vue({
   el: '#app',

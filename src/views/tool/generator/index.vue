@@ -263,7 +263,7 @@ export default {
           this.$modal.msgSuccess('成功生成到自定义路径：' + row.genPath)
         })
       } else {
-        this.$download.zip('/tool/gen/batchGenCode?tables=' + tableNames, 'ruoyi.zip')
+        this.$download.zip('/v1/table/batchGenCode?tables=' + tableNames, 'ox-admin.zip')
       }
     },
     /** 同步数据库操作 */

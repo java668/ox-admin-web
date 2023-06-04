@@ -46,7 +46,7 @@ export function importTable(data) {
 // 预览生成代码
 export function previewTable(tableId) {
   return request({
-    url: '/tool/gen/preview/' + tableId,
+    url: `/v1/table/preview/${tableId}`,
     method: 'get'
   })
 }
@@ -54,7 +54,7 @@ export function previewTable(tableId) {
 // 删除表数据
 export function delTable(tableId) {
   return request({
-    url: '/tool/gen/' + tableId,
+    url: `v1/table/${tableId}`,
     method: 'delete'
   })
 }
