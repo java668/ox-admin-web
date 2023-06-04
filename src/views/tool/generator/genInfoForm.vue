@@ -71,9 +71,10 @@
             v-model="info.parentMenuId"
             :append-to-body="true"
             :options="menus"
-            :normalizer="normalizer"
+            :flat="true"
             :show-count="true"
             placeholder="请选择系统菜单"
+            no-children-text="暂无下级节点"
           />
         </el-form-item>
       </el-col>
