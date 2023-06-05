@@ -1,4 +1,4 @@
-import request from '@/utils/ox-request'
+import request from '@/utils/request'
 
 // 查询生成表数据
 export function listTable(query) {
@@ -28,7 +28,7 @@ export function getGenTable(tableId) {
 // 修改代码生成信息
 export function updateGenTable(data) {
   return request({
-    url: '/tool/gen',
+    url: '/v1/table',
     method: 'put',
     data: data
   })

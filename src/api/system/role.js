@@ -1,4 +1,4 @@
-import request from '@/utils/ox-request'
+import request from '@/utils/request'
 import qs from 'qs'
 
 export function add(data) {
