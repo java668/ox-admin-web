@@ -101,7 +101,7 @@
             <template slot-scope="scope">
               <el-select v-model="scope.row.dictType" clearable filterable placeholder="请选择">
                 <el-option
-                  v-for="dict in dictOptions"
+                  v-for="dict in $dict.list"
                   :key="dict.dictType"
                   :label="dict.dictName"
                   :value="dict.dictType"
@@ -129,7 +129,6 @@
 
 <script>
 import { getGenTable, updateGenTable } from '@/api/generator'
-// import { optionselect as getDictOptionselect } from '@/api/generator'
 import { treeList } from '@/api/system/menu'
 import basicInfoForm from './basicInfoForm'
 import genInfoForm from './genInfoForm'
@@ -168,10 +167,6 @@ export default {
         this.info = res.data.info
         this.tables = res.data.tables
       })
-      /** 查询字典下拉列表 */
-      // getDictOptionselect().then(response => {
-      //   this.dictOptions = response.data
-      // })
       /** 查询菜单下拉列表 */
       treeList().then(response => {
         this.menus = [{ id: 0, label: '顶级节点', children: response.data }]
