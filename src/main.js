@@ -29,6 +29,14 @@ import Pagination from '@/components/Pagination'
 import DictTag from '@/components/DictTag'
 // 自定义表格工具组件
 import RightToolbar from '@/components/RightToolbar'
+// 图片上传组件
+import ImageUpload from '@/components/ImageUpload'
+// 图片预览组件
+import ImagePreview from '@/components/ImagePreview'
+// 富文本组件
+import Editor from '@/components/Editor'
+// 文件上传组件
+import FileUpload from '@/components/FileUpload'
 
 // 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI, {
@@ -51,6 +59,10 @@ Object.keys(common).forEach(key => {
 Vue.component('Pagination', Pagination)
 Vue.component('DictTag', DictTag)
 Vue.component('RightToolbar', RightToolbar)
+Vue.component('ImageUpload', ImageUpload)
+Vue.component('ImagePreview', ImagePreview)
+Vue.component('Editor', Editor)
+Vue.component('FileUpload', FileUpload)
 
 Vue.use(plugins)
 Vue.use(directive)

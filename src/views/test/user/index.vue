@@ -2,19 +2,12 @@
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :model="queryParams" size="small" :inline="true" label-width="68px">
       <el-form-item label="用户名" prop="username">
-        <el-input
+        <el-date-picker
           v-model="queryParams.username"
-          placeholder="请输入用户名"
           clearable
-          @keyup.enter.native="handleQuery"
-        />
-      </el-form-item>
-      <el-form-item label="昵称" prop="nickName">
-        <el-input
-          v-model="queryParams.nickName"
-          placeholder="请输入昵称"
-          clearable
-          @keyup.enter.native="handleQuery"
+          type="date"
+          value-format="yyyy-MM-dd"
+          placeholder="请选择用户名"
         />
       </el-form-item>
       <el-form-item label="状态：0启用、1禁用" prop="enabled">
@@ -82,16 +75,38 @@
     <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="主键id" align="center" prop="id" />
-      <el-table-column label="用户名" align="center" prop="username" />
+      <el-table-column label="用户名" align="center" prop="username" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.username, '{y}-{m}-{d}') }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="密码" align="center" prop="password" />
-      <el-table-column label="昵称" align="center" prop="nickName" />
-      <el-table-column label="性别" align="center" prop="gender" />
+      <el-table-column label="昵称" align="center" prop="nickName">
+        <template slot-scope="scope">
+          <dict-tag :options="$dict.userSex.values" :value="scope.row.nickName ? scope.row.nickName.split(',') : []" />
+        </template>
+      </el-table-column>
+      <el-table-column label="性别" align="center" prop="gender">
+        <template slot-scope="scope">
+          <dict-tag :options="$dict.userSex.values" :value="scope.row.gender" />
+        </template>
+      </el-table-column>
       <el-table-column label="手机号码" align="center" prop="phone" />
       <el-table-column label="邮箱" align="center" prop="email" />
-      <el-table-column label="头像" align="center" prop="avatar" />
+      <el-table-column label="头像" align="center" prop="avatar" width="100">
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.avatar" :width="50" :height="50" />
+        </template>
+      </el-table-column>
       <el-table-column label="状态：0启用、1禁用" align="center" prop="enabled">
         <template slot-scope="scope">
           <dict-tag :options="$dict.userStatus.values" :value="scope.row.enabled" />
+        </template>
+      </el-table-column>
+      <el-table-column label="创建者" align="center" prop="createBy" />
+      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+        <template slot-scope="scope">
+          <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -126,25 +141,45 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="用户名" prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" />
+          <el-date-picker
+            v-model="form.username"
+            clearable
+            type="date"
+            value-format="yyyy-MM-dd"
+            placeholder="请选择用户名"
+          />
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="form.password" placeholder="请输入密码" />
+          <el-input v-model="form.password" type="textarea" placeholder="请输入内容" />
         </el-form-item>
         <el-form-item label="昵称" prop="nickName">
-          <el-input v-model="form.nickName" placeholder="请输入昵称" />
+          <el-checkbox-group v-model="form.nickName">
+            <el-checkbox
+              v-for="dict in $dict.userSex.values"
+              :key="dict.value"
+              :label="dict.value"
+            >
+              {{ dict.label }}
+            </el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item label="性别" prop="gender">
-          <el-input v-model="form.gender" placeholder="请输入性别" />
+          <el-radio-group v-model="form.gender">
+            <el-radio
+              v-for="dict in $dict.userSex.values"
+              :key="dict.value"
+              :label="dict.value"
+            >{{ dict.label }}</el-radio>
+          </el-radio-group>
         </el-form-item>
-        <el-form-item label="手机号码" prop="phone">
-          <el-input v-model="form.phone" placeholder="请输入手机号码" />
+        <el-form-item label="手机号码">
+          <editor v-model="form.phone" :min-height="192" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
-          <el-input v-model="form.email" placeholder="请输入邮箱" />
+          <file-upload v-model="form.email" />
         </el-form-item>
         <el-form-item label="头像" prop="avatar">
-          <el-input v-model="form.avatar" placeholder="请输入头像" />
+          <image-upload v-model="form.avatar" />
         </el-form-item>
         <el-form-item label="状态：0启用、1禁用" prop="enabled">
           <el-select v-model="form.enabled" placeholder="请选择状态：0启用、1禁用">
@@ -212,7 +247,7 @@ export default {
           { required: true, message: '昵称不能为空', trigger: 'blur' }
         ],
         gender: [
-          { required: true, message: '性别不能为空', trigger: 'blur' }
+          { required: true, message: '性别不能为空', trigger: 'change' }
         ],
         phone: [
           { required: true, message: '手机号码不能为空', trigger: 'blur' }
@@ -268,7 +303,7 @@ export default {
         id: null,
         username: null,
         password: null,
-        nickName: null,
+        nickName: [],
         gender: null,
         phone: null,
         email: null,
@@ -310,6 +345,7 @@ export default {
       const id = row.id || this.ids
       getUser(id).then(response => {
         this.form = response.data
+        this.form.nickName = this.form.nickName.split(',')
         this.open = true
         this.title = '修改系统用户'
       })
@@ -318,6 +354,7 @@ export default {
     submitForm() {
       this.$refs['form'].validate(valid => {
         if (valid) {
+          this.form.nickName = this.form.nickName.join(',')
           if (this.form.id != null) {
             updateUser(this.form).then(response => {
               this.$modal.msgSuccess('修改成功')
