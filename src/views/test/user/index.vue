@@ -17,7 +17,7 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="enabled">
+      <el-form-item label="状态：0启用、1禁用" prop="enabled">
         <el-select v-model="queryParams.enabled" placeholder="请选择状态：0启用、1禁用" clearable>
           <el-option
             v-for="dict in $dict.userStatus.values"
@@ -152,12 +152,9 @@
               v-for="dict in $dict.userStatus.values"
               :key="dict.value"
               :label="dict.label"
-              :value="parseInt(dict.value)"
+              :value="String(dict.value)"
             />
           </el-select>
-        </el-form-item>
-        <el-form-item label="是否删除" prop="isDeleted">
-          <el-input v-model="form.isDeleted" placeholder="请输入是否删除" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
