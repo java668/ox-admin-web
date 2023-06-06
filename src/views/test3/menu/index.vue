@@ -47,15 +47,17 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column label="菜单标题" align="center" prop="title" />
-      <el-table-column label="组件名称" align="center" prop="name" />
       <el-table-column label="组件" align="center" prop="component" />
       <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="图标" align="center" prop="icon" />
       <el-table-column label="链接地址" align="center" prop="path" />
       <el-table-column label="是否外链" align="center" prop="iframe" />
       <el-table-column label="缓存" align="center" prop="cache" />
-      <el-table-column label="隐藏" align="center" prop="hidden" />
-      <el-table-column label="权限" align="center" prop="permission" />
+      <el-table-column label="隐藏" align="center" prop="hidden">
+        <template slot-scope="scope">
+          <dict-tag :options="$dict.userStatus.values" :value="scope.row.hidden" />
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -114,7 +116,13 @@
           <el-input v-model="form.cache" placeholder="请输入缓存" />
         </el-form-item>
         <el-form-item label="隐藏" prop="hidden">
-          <el-input v-model="form.hidden" placeholder="请输入隐藏" />
+          <el-radio-group v-model="form.hidden">
+            <el-radio
+              v-for="dict in $dict.userStatus.values"
+              :key="dict.value"
+              :label="parseInt(dict.value)"
+            >{{ dict.label }}</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item label="权限" prop="permission">
           <el-input v-model="form.permission" placeholder="请输入权限" />
@@ -135,6 +143,7 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
 export default {
   name: 'Menu',
+  dicts: ['userStatus'],
   components: {
     Treeselect
   },
