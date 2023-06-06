@@ -28,17 +28,6 @@
             >
               修改
             </el-button>
-            <el-button
-              v-permission="['menu:delete']"
-              class="filter-item"
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              :disabled="selections.length === 0"
-              @click="handleBatchDelete(selections)"
-            >
-              删除
-            </el-button>
           </span>
         </div>
       </div>
@@ -399,17 +388,6 @@ export default {
     handleDelete: function(params) {
       const ids = params.id
       this.doDelete(ids)
-    },
-    handleBatchDelete(data) {
-      this.$confirm(`确认删除选中的${data.length}条数据?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        const ids = this.selections.map(item => item.id).toString()
-        this.doDelete(ids)
-      }).catch(() => {
-      })
     },
     doDelete(ids) {
       this.delAllLoading = true
