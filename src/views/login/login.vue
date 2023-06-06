@@ -110,23 +110,22 @@ export default {
     }
   },
   mounted() {
-    setInterval(() => {
-      // 定义要切换的背景图片，双引号里面，可以放任意多个
-      const images = [
-        // require('@/assets/images/party.1036.jpg'),
-        require('@/assets/images/party.1037.jpg'),
-        require('@/assets/images/party.1038.jpg'),
-        require('@/assets/images/party.1039.jpg'),
-        require('@/assets/images/party.1041.jpg'),
-        require('@/assets/images/party.1040.jpg')
-      ]
-      if (this.currentIndex >= images.length) {
-        this.currentIndex = 0
-      }
-      this.backgroundImageUrl = images[this.currentIndex]
-      this.currentIndex += 1
-      console.log('backgroundImageUrl', this.backgroundImageUrl)
-    }, 5000)
+    // setInterval(() => {
+    //   // 定义要切换的背景图片，双引号里面，可以放任意多个
+    //   const images = [
+    //     require('@/assets/images/party.1037.jpg'),
+    //     require('@/assets/images/party.1038.jpg'),
+    //     require('@/assets/images/party.1039.jpg'),
+    //     require('@/assets/images/party.1041.jpg'),
+    //     require('@/assets/images/party.1040.jpg')
+    //   ]
+    //   if (this.currentIndex >= images.length) {
+    //     this.currentIndex = 0
+    //   }
+    //   this.backgroundImageUrl = images[this.currentIndex]
+    //   this.currentIndex += 1
+    //   console.log('backgroundImageUrl', this.backgroundImageUrl)
+    // }, 5000)
   },
   methods: {
     showPwd() {
