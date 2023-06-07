@@ -17,28 +17,25 @@
               新增
             </el-button>
             <el-button
-              v-permission="['menu:update']"
+              type="info"
               class="filter-item"
+              plain
+              icon="el-icon-sort"
               size="mini"
-              type="success"
-              icon="el-icon-edit"
-              :loading="editLoading"
-              :disabled="selections.length !== 1"
-              @click="handleEdit(selections[0])"
-            >
-              修改
-            </el-button>
+              @click="toggleExpandAll"
+            >展开/折叠</el-button>
           </span>
         </div>
       </div>
     </div>
     <el-table
+      v-if="refreshTable"
       ref="menuTable"
       v-loading="listLoading"
       :data="tableData"
       style="width: 100%;margin-bottom: 20px;"
       row-key="id"
-      default-expand-all
+      :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
       :row-class-name="rowClassNameFun"
       :header-row-class-name="headerRowClassName"
@@ -46,7 +43,7 @@
       @select-all="selectAllFun"
       @selection-change="selectionChangeHandler"
     >
-      <el-table-column type="selection" width="55" />
+      <!--      <el-table-column type="selection" width="55" />-->
       <el-table-column :show-overflow-tooltip="true" label="菜单标题" width="125px" prop="title" />
       <el-table-column prop="icon" label="图标" align="center" width="60px">
         <template slot-scope="scope">
@@ -278,7 +275,10 @@ export default {
           { required: true, message: '请输入组件路径', trigger: 'blur' }
         ]
       },
-      tableData: []
+      tableData: [],
+      isExpandAll: true,
+      // 重新渲染表格状态
+      refreshTable: true
     }
   },
   created() {
@@ -296,6 +296,7 @@ export default {
       })
     },
     selectionChangeHandler(data) {
+      // selection 参数是选中的复选框的数据数组
       this.selections = data
     },
     // 显示新增界面
@@ -413,6 +414,14 @@ export default {
       const formData = this.$options.data().form
       formData.type = type
       this.form = formData
+    },
+    /** 展开/折叠操作 */
+    toggleExpandAll() {
+      this.refreshTable = false
+      this.isExpandAll = !this.isExpandAll
+      this.$nextTick(() => {
+        this.refreshTable = true
+      })
     },
     /**
      * Element Table 表格树形结构多选框选中父级时会选中子级（递归多级）

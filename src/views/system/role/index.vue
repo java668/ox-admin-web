@@ -155,7 +155,6 @@
             :data="menuTree"
             :default-checked-keys="menuIds"
             :props="defaultProps"
-            default-expand-all
             show-checkbox
             node-key="id"
           />

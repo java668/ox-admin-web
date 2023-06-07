@@ -62,7 +62,7 @@ export function delTable(tableId) {
 // 生成代码（自定义路径）
 export function genCode(tableName) {
   return request({
-    url: '/tool/gen/genCode/' + tableName,
+    url: 'v1/table/genCode/' + tableName,
     method: 'get'
   })
 }
@@ -70,7 +70,7 @@ export function genCode(tableName) {
 // 同步数据库
 export function synchDb(tableName) {
   return request({
-    url: '/tool/gen/synchDb/' + tableName,
+    url: 'v1/table/syncDb/' + tableName,
     method: 'get'
   })
 }
