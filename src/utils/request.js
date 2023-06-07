@@ -9,6 +9,8 @@ const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 10000 // request timeout
 })
+// 是否显示重新登录
+const isReLogin = { show: false }
 
 // request interceptor
 service.interceptors.request.use(
@@ -73,16 +75,22 @@ service.interceptors.response.use(
     }
     if (status) {
       if (status === 401) {
-        // to re-login
-        MessageBox.confirm('当前登录状态已过期，请您重新登录！', '登录过期', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
+        if (!isReLogin.show) {
+          isReLogin.show = true
+          // to re-login
+          MessageBox.confirm('当前登录状态已过期，请您重新登录！', '登录过期', {
+            confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            isReLogin.show = false
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
+          }).catch(() => {
+            isReLogin.show = false
           })
-        })
+        }
       } else if (status === 403) {
         debugger
         Message({
@@ -107,4 +115,5 @@ service.interceptors.response.use(
   }
 )
 
+export { isReLogin }
 export default service
