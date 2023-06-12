@@ -75,7 +75,8 @@ service.interceptors.response.use(
     }
     if (status) {
       if (status === 401) {
-        if (!isReLogin.show) {
+        const url = error.config.url
+        if (!isReLogin.show && (!url.endsWith('/logout') && !url.endsWith('/v1/auth/info'))) {
           isReLogin.show = true
           // to re-login
           MessageBox.confirm('当前登录状态已过期，请您重新登录！', '登录过期', {
@@ -90,9 +91,14 @@ service.interceptors.response.use(
           }).catch(() => {
             isReLogin.show = false
           })
+        } else {
+          Message({
+            message: '当前登录状态已过期，请您重新登录',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
       } else if (status === 403) {
-        debugger
         Message({
           message: '暂无权限操作，请联系管理员',
           type: 'error',
