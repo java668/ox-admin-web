@@ -1,5 +1,5 @@
 // 适配 Nginx 反向代理
-const baseUrl = process.env.VUE_APP_BASE_RECORD_API === '/' ? '' : process.env.VUE_APP_BASE_RECORD_API
+const baseUrl = process.env.VUE_APP_BASE_API === '/' ? '' : process.env.VUE_APP_BASE_API
 const api = {
   state: {
     // 部署包上传

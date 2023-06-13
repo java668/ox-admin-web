@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 import errorCode from '@/utils/errorCode'
 import { blobValidate } from '@/utils/common'
 
-const baseURL = process.env.VUE_APP_BASE_RECORD_API
+const baseURL = process.env.VUE_APP_BASE_API
 
 export default {
   name(name, isDelete = true) {
