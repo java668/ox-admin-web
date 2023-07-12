@@ -24,7 +24,7 @@
         style="width: 110px"
         @change="getList"
       >
-        <el-option v-for="item in $dict.userStatus.values" :key="item.id" :label="item.name" :value="item.id" />
+        <el-option v-for="item in $dict.userStatus.values" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
       <span>
         <el-button
@@ -187,13 +187,12 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="状态">
-          <!--          <el-radio-group v-model="form.enabled" :disabled="form.id === user.id">-->
           <el-radio-group v-model="form.enabled" :disabled="form.username === name">
             <el-radio
               v-for="item in $dict.userStatus.values"
-              :key="item.id"
-              :label="item.id"
-            >{{ item.name }}
+              :key="item.value"
+              :label="item.value"
+            >{{ item.label }}
             </el-radio>
           </el-radio-group>
         </el-form-item>

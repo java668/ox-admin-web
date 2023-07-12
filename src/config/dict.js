@@ -12,7 +12,6 @@ function init() {
   dict.list = dictConfig
   keys.forEach(key => {
     const item = dictConfig[key]
-    console.log(item.dictType)
     const dictType = item.dictType
     Vue.set(dict.dict, dictType, {})
     Vue.set(dict.label, dictType, {})
